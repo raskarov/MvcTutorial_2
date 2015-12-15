@@ -204,13 +204,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512150107118_InitialCreate.cs" />
-    <Compile Include="Migrations\201512150107118_InitialCreate.Designer.cs">
-      <DependentUpon>201512150107118_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512150129594_Specialization.cs" />
-    <Compile Include="Migrations\201512150129594_Specialization.Designer.cs">
-      <DependentUpon>201512150129594_Specialization.cs</DependentUpon>
+    <Compile Include="Migrations\201512150741004_Patients.cs" />
+    <Compile Include="Migrations\201512150741004_Patients.Designer.cs">
+      <DependentUpon>201512150741004_Patients.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -408,11 +404,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512150107118_InitialCreate.resx">
-      <DependentUpon>201512150107118_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512150129594_Specialization.resx">
-      <DependentUpon>201512150129594_Specialization.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512150741004_Patients.resx">
+      <DependentUpon>201512150741004_Patients.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

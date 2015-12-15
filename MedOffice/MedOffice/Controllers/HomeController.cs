@@ -12,7 +12,7 @@ namespace MedOffice.Controllers
     {
         public ActionResult Index()
         { 
-           return View();
+           return View("~/Views/Account/Login.cshtml");
         }
 
         public ActionResult About()

@@ -70,7 +70,7 @@ namespace MedOffice.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
 
             // Сбои при входе не приводят к блокированию учетной записи
@@ -79,7 +79,7 @@ namespace MedOffice.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return View("~/Views/Home/Index.cshtml");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

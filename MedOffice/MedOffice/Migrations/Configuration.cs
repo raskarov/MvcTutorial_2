@@ -10,7 +10,6 @@ namespace MedOffice.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "MedOffice.DAL.OfficeContext";
         }
 
         protected override void Seed(MedOffice.DAL.OfficeContext context)
