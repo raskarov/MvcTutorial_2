@@ -12,7 +12,7 @@ namespace MedOffice.Models
         public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
-        public string Spec { get; set; }
+        public virtual Specialization Spec { get; set; }
 
     }
 }
