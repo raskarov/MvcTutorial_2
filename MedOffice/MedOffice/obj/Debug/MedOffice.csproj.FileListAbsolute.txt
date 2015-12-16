@@ -96,6 +96,5 @@ C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.Faceb
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.Google.resources.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.csprojResolveAssemblyReference.cache
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.pdb

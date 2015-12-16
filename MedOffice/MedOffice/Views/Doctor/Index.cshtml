@@ -21,16 +21,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#jqg").jqGrid({
-                url: '@Url.Action("GetData")',
+                url: '@Url.Action("GetPatients")',
                 datatype: "json",
-                colNames: ['Id', 'Name', 'Surname', 'DateOfBirth', 'Email','Specialization'],
+                colNames: ['Id', 'Name', 'Surname', 'Date', 'Comment','DoctorId'],
                 colModel: [
                 { name: 'Id', index: 'Id', width: 30, stype: 'text' },
                 { name: 'Name', index: 'Name', width: 150, sortable: true },
                 { name: 'Surname', index: 'Surname', width: 150, sortable: true },
-                { name: 'DateOfBirth', index: 'DateOfBirth', width: 100, sortable: false },
-                { name: 'Email', index: 'Email', width: 220, align: "right", sortable: true },
-                { name: 'Spec', index: 'Spec', width: 150, sortable:true}
+                { name: 'Date', index: 'Date', width: 100, sortable: false },
+                { name: 'Comment', index: 'Comment', width: 220, align: "right", sortable: true },
+                { name: 'DoctorId', index: 'DoctorId', width: 150, sortable:true}
                 ],
                 rowNum: 5, // число отображаемых строк
                 loadonce: true, // загрузка только один раз

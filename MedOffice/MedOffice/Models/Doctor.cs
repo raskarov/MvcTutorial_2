@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,7 @@ namespace MedOffice.Models
         public string Email { get; set; }
         public Specialization Spec { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Patient> Patients { get; set; }
 
     }
