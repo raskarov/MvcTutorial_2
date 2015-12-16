@@ -98,3 +98,4 @@ C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.Twitt
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.pdb
+C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.csprojResolveAssemblyReference.cache

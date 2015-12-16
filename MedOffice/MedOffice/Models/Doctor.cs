@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,8 @@ namespace MedOffice.Models
         public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
+
+
         public Specialization Spec { get; set; }
 
         [JsonIgnore]
