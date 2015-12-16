@@ -10,7 +10,7 @@ namespace MedOffice.DAL
 {
     public class OfficeContext : DbContext
     {
-        
+
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<Patient> Patients { get; set; }

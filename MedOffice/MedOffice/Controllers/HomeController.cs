@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MedOffice.DAL;
 using MedOffice.Models;
+using Newtonsoft.Json;
+using MedOffice.DAL;
 
 namespace MedOffice.Controllers
 {
     public class HomeController : Controller
     {
+        private OfficeContext db = new OfficeContext();
+
         public ActionResult Index()
-        { 
-           return View("~/Views/Account/Login.cshtml");
+        {
+            return View();
         }
 
         public ActionResult About()
@@ -27,6 +30,11 @@ namespace MedOffice.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public string GetData()
+        {
+            return JsonConvert.SerializeObject(db.Doctors.ToList());
         }
     }
 }
