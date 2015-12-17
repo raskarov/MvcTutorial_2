@@ -8,21 +8,21 @@ using System.Web;
 using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
-using Newtonsoft.Json;
 
 namespace MedOffice.Controllers
 {
-    public class DoctorController : Controller
+    public class DoctorsController : Controller
     {
         private OfficeContext db = new OfficeContext();
 
-        // GET: Doctor
+        // GET: Doctors
         public ActionResult Index()
         {
-            return View(db.Doctors.ToList());
+            
+            return View(db.Doctors.Include(d => d.Spec).ToList());
         }
 
-        // GET: Doctor/Details/5
+        // GET: Doctors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,13 +37,13 @@ namespace MedOffice.Controllers
             return View(doctor);
         }
 
-        // GET: Doctor/Create
+        // GET: Doctors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Doctor/Create
+        // POST: Doctors/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -60,7 +60,7 @@ namespace MedOffice.Controllers
             return View(doctor);
         }
 
-        // GET: Doctor/Edit/5
+        // GET: Doctors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,7 +75,7 @@ namespace MedOffice.Controllers
             return View(doctor);
         }
 
-        // POST: Doctor/Edit/5
+        // POST: Doctors/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -91,7 +91,7 @@ namespace MedOffice.Controllers
             return View(doctor);
         }
 
-        // GET: Doctor/Delete/5
+        // GET: Doctors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,7 +106,7 @@ namespace MedOffice.Controllers
             return View(doctor);
         }
 
-        // POST: Doctor/Delete/5
+        // POST: Doctors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -124,11 +124,6 @@ namespace MedOffice.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public string GetPatients()
-        {
-            return JsonConvert.SerializeObject(db.Patients.ToList());
         }
     }
 }
