@@ -29,7 +29,8 @@ namespace MedOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
+            var Doct = db.Doctors.Include(d => d.Spec).ToList();
+            var doctor = Doct.Find(x => x.Id == id);
             if (doctor == null)
             {
                 return HttpNotFound();
@@ -101,7 +102,8 @@ namespace MedOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
+            var Doct = db.Doctors.Include(d => d.Spec).ToList();
+            var doctor = Doct.Find(x => x.Id == id);
             if (doctor == null)
             {
                 return HttpNotFound();

@@ -36,15 +36,22 @@
 
         <dt>
             @Html.DisplayNameFor(model => model.Email)
-        </dt>
+        </dt>   
 
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor( model => model.Spec.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spec.Name)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit","Edit", new { id = Model.Id })
     @Html.ActionLink("Back to List", "Index")
 </p>
