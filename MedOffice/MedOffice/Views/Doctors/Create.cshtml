@@ -1,10 +1,22 @@
 ﻿@model MedOffice.Models.Doctor
-
+@using MedOffice.DAL;
 @{
     ViewBag.Title = "Create";
 }
 
+@{ 
+    
+    OfficeContext db = new OfficeContext();
+
+    List<SelectListItem> list = new List<SelectListItem>();
+    foreach (var spec in db.Specialization)
+    {
+        list.Add(new SelectListItem() { Text = spec.Name, Value = spec.Id.ToString() });
+    }
+}
+
 <h2>Create</h2>
+
 
 
 @using (Html.BeginForm()) 
@@ -46,6 +58,16 @@
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Spec.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(d => d.SpecID, list)
+                @Html.ValidationMessageFor(model => model.Spec.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

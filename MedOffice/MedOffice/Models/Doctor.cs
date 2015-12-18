@@ -14,7 +14,10 @@ namespace MedOffice.Models
         public string Surname { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
-        public string Email { get; set; } 
+        public string Email { get; set; }
+        public int SpecID { get; set; }
+
+
         public Specialization Spec { get; set; }
 
         [JsonIgnore]

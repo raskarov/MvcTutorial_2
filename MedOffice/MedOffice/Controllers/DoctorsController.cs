@@ -40,6 +40,7 @@ namespace MedOffice.Controllers
         // GET: Doctors/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
@@ -48,8 +49,10 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor)
         {
+            
+
             if (ModelState.IsValid)
             {
                 db.Doctors.Add(doctor);
