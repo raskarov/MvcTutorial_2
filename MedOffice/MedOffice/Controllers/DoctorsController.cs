@@ -83,7 +83,7 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,DateOfBirth,Email")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
