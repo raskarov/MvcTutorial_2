@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
+using PagedList;
 
 namespace MedOffice.Controllers
 {
@@ -16,10 +17,11 @@ namespace MedOffice.Controllers
         private OfficeContext db = new OfficeContext();
 
         // GET: Doctors
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            
-            return View(db.Doctors.Include(d => d.Spec).ToList());
+            int PageSize = 5;
+            int PageNumber = (page ?? 1);
+            return View(db.Doctors.Include(d => d.Spec).ToList().ToPagedList(PageNumber,PageSize));
         }
 
         // GET: Doctors/Details/5
