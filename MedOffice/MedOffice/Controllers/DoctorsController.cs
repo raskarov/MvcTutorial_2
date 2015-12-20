@@ -17,12 +17,27 @@ namespace MedOffice.Controllers
         private OfficeContext db = new OfficeContext();
 
         // GET: Doctors
-        public ActionResult Index(int? page, string sortOrder)
+        public ActionResult Index(int? page, string sortOrder, string searchString, string currentFilter)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.SpecSortParm = sortOrder == "Spec" ? "spec_desc" : "Spec";
             var Doctors = db.Doctors.Include(db => db.Spec);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Doctors = Doctors.Where(d => d.Surname.Contains(searchString) || d.Name.Contains(searchString));
+            }
+            
             switch(sortOrder)
             {
                 case "name_desc":
