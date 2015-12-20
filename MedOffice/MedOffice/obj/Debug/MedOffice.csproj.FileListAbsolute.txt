@@ -100,7 +100,6 @@ C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.pdb
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.Migrations.UpdateDoctors.resources
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.csproj.GenerateResource.Cache
-C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\obj\Debug\MedOffice.csprojResolveAssemblyReference.cache
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\PagedList.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\PagedList.Mvc.dll
 C:\GitHub\MvcTutorial_2\MedOffice\MedOffice\bin\PagedList.xml

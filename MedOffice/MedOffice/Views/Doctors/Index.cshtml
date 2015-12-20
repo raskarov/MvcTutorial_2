@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            Name
+            @Html.ActionLink("Name","Index", new { sortOrder = ViewBag.NameSortParm})
         </th>
         <th>
             Surname
@@ -25,7 +25,7 @@
             Email
         </th>
         <th>
-            Specialization
+            @Html.ActionLink("Specialization", "Index", new { sortOrder = ViewBag.SpecSortParm})
         </th>
         <th></th>
     </tr>
@@ -60,4 +60,4 @@
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0: Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",new { page }))
+@Html.PagedListPager(Model, page => Url.Action("Index",new { page, sortOrder = ViewBag.CurrentSort }))

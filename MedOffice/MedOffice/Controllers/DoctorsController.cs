@@ -17,11 +17,32 @@ namespace MedOffice.Controllers
         private OfficeContext db = new OfficeContext();
 
         // GET: Doctors
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string sortOrder)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.SpecSortParm = sortOrder == "Spec" ? "spec_desc" : "Spec";
+            var Doctors = db.Doctors.Include(db => db.Spec);
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    Doctors = Doctors.OrderByDescending(d => d.Name);
+                    break;
+                case "Spec":
+                    Doctors = Doctors.OrderBy(d => d.Spec.Name);
+                    break;
+                case "spec_desc":
+                    Doctors = Doctors.OrderByDescending(d => d.Spec.Name);
+                    break;
+                default:
+                    Doctors = Doctors.OrderBy(d => d.Name);
+                    break;
+                    
+            }
             int PageSize = 5;
             int PageNumber = (page ?? 1);
-            return View(db.Doctors.Include(d => d.Spec).ToList().ToPagedList(PageNumber,PageSize));
+            
+            return View(Doctors.ToPagedList(PageNumber,PageSize));
         }
 
         // GET: Doctors/Details/5
