@@ -15,13 +15,19 @@ namespace MedOffice.Models
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
+
         public int SpecID { get; set; }
-
-
         public Specialization Spec { get; set; }
 
-        [JsonIgnore]
         public virtual ICollection<Patient> Patients { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return Surname + " " + Name;
+            }
+        }
 
     }
 }
