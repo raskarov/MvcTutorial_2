@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
+using PagedList;
 
 namespace MedOffice.Controllers
 {
@@ -16,10 +17,50 @@ namespace MedOffice.Controllers
         private OfficeContext db = new OfficeContext();
 
         // GET: Patients
-        public ActionResult Index()
+        public ActionResult Index(int? page, string sortOrder, string searchString, string currentFilter)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DoctSortParm = sortOrder == "Doct" ? "doct_desc" : "Doct";
+
+            if(searchString!= null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var patients = db.Patients.Include(p => p.Doctor);
-            return View(patients.ToList());
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(x => x.Name.Contains(searchString) || x.Surname.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(x => x.Name);
+                    break;
+                case "Doct":
+                    patients = patients.OrderBy(x => x.Doctor.Surname);
+                    break;
+                case "doct_desc":
+                    patients = patients.OrderByDescending(x => x.Doctor.Surname);
+                    break;
+                default:
+                    patients = patients.OrderBy(x => x.Name);
+                    break;
+            }
+            
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(patients.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: Patients/Details/5

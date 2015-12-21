@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MedOffice.Models.Patient>
+﻿@model PagedList.IPagedList<MedOffice.Models.Patient>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/ccs" />
 
 @{
     ViewBag.Title = "Patients";
@@ -6,11 +8,22 @@
 
 <h2>Patients</h2>
 
-@Html.Partial("PatPartV")
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
+@using (Html.BeginForm("Index", "Patients", FormMethod.Get))
+{
+    <p>
+        Find by Name: @Html.TextBox("SearchString",ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 
+@Html.Partial("PatPartV")
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page =>Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 

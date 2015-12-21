@@ -1,32 +1,29 @@
-﻿@model IEnumerable< MedOffice.Models.Patient >
-
+﻿@model PagedList.IPagedList<MedOffice.Models.Patient>
+@using PagedList.Mvc;
 
 <table class="table">
-    <tr>
+    <tr>       
         <th>
-            Doctor
+            @Html.ActionLink("Name","Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Surname
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            Date of birth
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            @Html.ActionLink("Doctor","Index", new { sortOrder = ViewBag.DoctSortParm, currentFilter = ViewBag.CurrentFilter})
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Comment)
+            Comment
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.FullName)
-            </td>
+        <tr>           
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -35,6 +32,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
