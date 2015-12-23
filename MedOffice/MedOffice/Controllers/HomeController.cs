@@ -4,9 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MedOffice.Models;
-using Newtonsoft.Json;
-using MedOffice.DAL;
-using System.Data.Entity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MedOffice.Controllers
 {
@@ -14,7 +12,7 @@ namespace MedOffice.Controllers
     {
 
         public ActionResult Index()
-        {          
+        { 
             return View();
         }
 
@@ -31,6 +29,5 @@ namespace MedOffice.Controllers
 
             return View();
         }
-
     }
 }

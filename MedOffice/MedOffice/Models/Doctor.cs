@@ -19,7 +19,7 @@ namespace MedOffice.Models
         public int SpecID { get; set; }
         public Specialization Spec { get; set; }
 
-        public virtual ICollection<Patient> Patients { get; set; }
+        public ICollection<Patient> Patients { get; set; }
 
         public string FullName
         {

@@ -17,6 +17,6 @@ namespace MedOffice.Models
         public string Comment { get; set; }
 
         public int DoctorID { get; set; }
-        public virtual Doctor Doctor { get; set; }
+        public Doctor Doctor { get; set; }
     }
 }

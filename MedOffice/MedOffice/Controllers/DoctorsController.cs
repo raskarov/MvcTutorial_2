@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
 using PagedList;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MedOffice.Controllers
 {
@@ -22,7 +23,7 @@ namespace MedOffice.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.SpecSortParm = sortOrder == "Spec" ? "spec_desc" : "Spec";
-            var Doctors = db.Doctors.Include(db => db.Spec);
+            var Doctors = db.Doctors.Include(d => d.Spec);
             if (searchString != null)
             {
                 page = 1;
@@ -90,14 +91,13 @@ namespace MedOffice.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor)
         {
-            
 
             if (ModelState.IsValid)
             {
                 db.Doctors.Add(doctor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
+            }            
 
             return View(doctor);
         }
@@ -147,6 +147,56 @@ namespace MedOffice.Controllers
                 return HttpNotFound();
             }
             return View(doctor);
+        }
+
+        public ActionResult Patients(int? id,int? page,string sortOrder, string searchString, string currentFilter)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var Pat = db.Patients.Include(p => p.Doctor);
+            Pat = Pat.Where(p => p.DoctorID == id);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.SpecSortParm = sortOrder == "Spec" ? "spec_desc" : "Spec";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Pat = Pat.Where(x => x.Name.Contains(searchString) || x.Surname.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    Pat =Pat.OrderByDescending(x => x.Name);
+                    break;
+                case "Doct":
+                    Pat = Pat.OrderBy(x => x.Doctor.Surname);
+                    break;
+                case "doct_desc":
+                    Pat = Pat.OrderByDescending(x => x.Doctor.Surname);
+                    break;
+                default:
+                    Pat = Pat.OrderBy(x => x.Name);
+                    break;
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+
+            return View(Pat.ToPagedList(pageNumber,pageSize));
+
         }
 
         // POST: Doctors/Delete/5
