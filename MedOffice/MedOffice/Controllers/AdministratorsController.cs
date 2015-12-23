@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace MedOffice.Controllers
 {
@@ -15,7 +18,16 @@ namespace MedOffice.Controllers
     {
         private OfficeContext db = new OfficeContext();
 
+        private LoginUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<LoginUserManager>();
+            }
+        }
+
         // GET: Administrators
+        [Authorize(Roles ="admin")]
         public ActionResult Index()
         {
             return View(db.Administrators.ToList());
@@ -47,8 +59,14 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Surname,Email")] Administrator administrator)
+        public ActionResult Create([Bind(Include = "ID,Name,Surname,Email")] Administrator administrator, string password)
         {
+            LoginUser user = new LoginUser { UserName = administrator.Email, Email = administrator.Email };
+            var result = UserManager.Create(user, password);
+            if(result.Succeeded)
+            {
+                UserManager.AddToRole(user.Id, "admin");
+            }
             if (ModelState.IsValid)
             {
                 db.Administrators.Add(administrator);
@@ -110,7 +128,10 @@ namespace MedOffice.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            
             Administrator administrator = db.Administrators.Find(id);
+            LoginUser user = UserManager.FindByEmail(administrator.Email);
+            UserManager.Delete(user);
             db.Administrators.Remove(administrator);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -10,6 +10,7 @@ using MedOffice.DAL;
 using MedOffice.Models;
 using PagedList;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace MedOffice.Controllers
 {
@@ -17,7 +18,16 @@ namespace MedOffice.Controllers
     {
         private OfficeContext db = new OfficeContext();
 
+        private LoginUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<LoginUserManager>();
+            }
+        }
+
         // GET: Doctors
+        [Authorize(Roles ="admin")]
         public ActionResult Index(int? page, string sortOrder, string searchString, string currentFilter)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -89,9 +99,15 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor, string password)
         {
 
+            LoginUser user = new LoginUser { UserName = doctor.Email, Email = doctor.Email };
+            var result = UserManager.Create(user, password);
+            if(result.Succeeded)
+            {
+                UserManager.AddToRole(user.Id, "doctor");
+            }
             if (ModelState.IsValid)
             {
                 db.Doctors.Add(doctor);
@@ -205,6 +221,8 @@ namespace MedOffice.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
+            LoginUser user = UserManager.FindByEmail(doctor.Email);
+            UserManager.Delete(user);
             db.Doctors.Remove(doctor);
             db.SaveChanges();
             return RedirectToAction("Index");

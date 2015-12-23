@@ -5,6 +5,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
+    <script>
+        function str_rand() {
+            var result = '';
+            var words = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+            var max_position = words.length - 1;
+            for (i = 0; i < 8; ++i) {
+                position = Math.floor(Math.random() * max_position);
+                result = result + words.substring(position, position + 1);
+            }
+
+            document.getElementById('password').value = result;
+        }
+    </script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -24,6 +37,7 @@
                     <li>@Html.ActionLink("Administrators", "Index", "Administrators")</li>
                     <li>@Html.ActionLink("Doctors", "Index", "Doctors")</li>
                     <li>@Html.ActionLink("Patients", "Index", "Patients")</li>
+                    <li>@Html.ActionLink("Logout","Logout","Account")</li>
                 </ul>
             </div>
         </div>
