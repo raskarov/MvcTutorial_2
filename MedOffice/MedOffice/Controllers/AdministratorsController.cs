@@ -11,6 +11,7 @@ using MedOffice.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using MedOffice.ViewModels;
 
 namespace MedOffice.Controllers
 {
@@ -51,7 +52,8 @@ namespace MedOffice.Controllers
         // GET: Administrators/Create
         public ActionResult Create()
         {
-            return View();
+            AdminCreateVM ViewModel = new AdminCreateVM();
+            return View(ViewModel);
         }
 
         // POST: Administrators/Create
@@ -59,8 +61,10 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Surname,Email")] Administrator administrator, string password)
+        public ActionResult Create( AdminCreateVM ViewModel, string password)
         {
+
+            Administrator administrator = new Administrator { Name = ViewModel.Name, Surname = ViewModel.Surname, Email = ViewModel.Email };
             LoginUser user = new LoginUser { UserName = administrator.Email, Email = administrator.Email };
             var result = UserManager.Create(user, password);
             if(result.Succeeded)

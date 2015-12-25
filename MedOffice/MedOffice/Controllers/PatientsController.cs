@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MedOffice.DAL;
 using MedOffice.Models;
 using PagedList;
+using MedOffice.ViewModels;
 
 namespace MedOffice.Controllers
 {
@@ -16,6 +17,7 @@ namespace MedOffice.Controllers
     {
         private OfficeContext db = new OfficeContext();
 
+        [Authorize]
         // GET: Patients
         public ActionResult Index(int? page, string sortOrder, string searchString, string currentFilter)
         {
@@ -81,8 +83,8 @@ namespace MedOffice.Controllers
         // GET: Patients/Create
         public ActionResult Create()
         {
-            ViewBag.DoctorID = new SelectList(db.Doctors, "Id", "FullName");
-            return View();
+            CreatePatientVM ViewModel = new CreatePatientVM();
+            return View(ViewModel);
         }
 
         // POST: Patients/Create
@@ -90,8 +92,9 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Surname,DateOfBirth,Comment,DoctorID")] Patient patient)
+        public ActionResult Create( CreatePatientVM ViewModel)
         {
+            Patient patient = new Patient { Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Comment = ViewModel.Comment, DoctorID = ViewModel.DoctorId };
             if (ModelState.IsValid)
             {
                 db.Patients.Add(patient);
@@ -99,7 +102,6 @@ namespace MedOffice.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DoctorID = new SelectList(db.Doctors, "Id", "FullName", patient.DoctorID);
             return View(patient);
         }
 
