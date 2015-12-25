@@ -11,6 +11,7 @@ using MedOffice.Models;
 using PagedList;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using MedOffice.ViewModels;
 
 namespace MedOffice.Controllers
 {
@@ -90,8 +91,8 @@ namespace MedOffice.Controllers
         // GET: Doctors/Create
         public ActionResult Create()
         {
-
-            return View();
+            CreateDoctorVM CreateDoctor = new CreateDoctorVM();
+            return View(CreateDoctor);
         }
 
         // POST: Doctors/Create
@@ -99,9 +100,10 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor, string password)
+        public ActionResult Create(CreateDoctorVM ViewModel, string password)
         {
 
+            Doctor doctor = new Doctor { Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Email = ViewModel.Email, SpecID = ViewModel.SpecId };
             LoginUser user = new LoginUser { UserName = doctor.Email, Email = doctor.Email };
             var result = UserManager.Create(user, password);
             if(result.Succeeded)
