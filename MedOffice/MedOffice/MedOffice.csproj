@@ -221,8 +221,11 @@
     <Compile Include="Models\Specialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AdminCreateVM.cs" />
+    <Compile Include="ViewModels\AdminEditVM.cs" />
     <Compile Include="ViewModels\CreateDoctorVM.cs" />
     <Compile Include="ViewModels\CreatePatientVM.cs" />
+    <Compile Include="ViewModels\DoctorEditVM.cs" />
+    <Compile Include="ViewModels\PatientEditVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -267,18 +270,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Doctors\Create.cshtml" />
     <Content Include="Views\Doctors\Delete.cshtml" />
-    <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Patients\Create.cshtml" />
     <Content Include="Views\Patients\Delete.cshtml" />
-    <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
     <Content Include="Views\Patients\PatPartV.cshtml" />
     <Content Include="Views\Administrators\Create.cshtml" />
     <Content Include="Views\Administrators\Delete.cshtml" />
-    <Content Include="Views\Administrators\Details.cshtml" />
     <Content Include="Views\Administrators\Edit.cshtml" />
     <Content Include="Views\Administrators\Index.cshtml" />
     <Content Include="Views\Doctors\Patients.cshtml" />

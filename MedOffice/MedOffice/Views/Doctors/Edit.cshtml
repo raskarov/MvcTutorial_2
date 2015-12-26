@@ -1,20 +1,9 @@
-﻿@model MedOffice.Models.Doctor
-@using MedOffice.DAL;
+﻿@model MedOffice.ViewModels.DoctorEditVM
 
 @{
     ViewBag.Title = "Edit";
 }
 
-@{
-
-    OfficeContext db = new OfficeContext();
-
-    List<SelectListItem> list = new List<SelectListItem>();
-    foreach (var spec in db.Specialization)
-    {
-        list.Add(new SelectListItem() { Text = spec.Name, Value = spec.Id.ToString() });
-    }
-}
 
 
 
@@ -30,6 +19,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.LoginEmail)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -64,10 +54,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Spec.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SpecID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(d => d.SpecID, list)
-                @Html.ValidationMessageFor(model => model.Spec.Name, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(d => d.SpecID, Model.list)
+                @Html.ValidationMessageFor(model => model.SpecID, "", new { @class = "text-danger" })
             </div>
         </div>
         

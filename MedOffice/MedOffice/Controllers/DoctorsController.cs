@@ -73,20 +73,7 @@ namespace MedOffice.Controllers
         }
 
         // GET: Doctors/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var Doct = db.Doctors.Include(d => d.Spec).ToList();
-            var doctor = Doct.Find(x => x.Id == id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
+
 
         // GET: Doctors/Create
         public ActionResult Create()
@@ -117,12 +104,13 @@ namespace MedOffice.Controllers
                 return RedirectToAction("Index");
             }            
 
-            return View(doctor);
+            return View(ViewModel);
         }
 
         // GET: Doctors/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,7 +120,8 @@ namespace MedOffice.Controllers
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            DoctorEditVM ViewModel = new DoctorEditVM { Id = doctor.Id, Name = doctor.Name, Surname = doctor.Surname, DateOfBirth = doctor.DateOfBirth, Email = doctor.Email, LoginEmail = doctor.Email, SpecID = doctor.SpecID };
+            return View(ViewModel);
         }
 
         // POST: Doctors/Edit/5
@@ -140,15 +129,20 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,DateOfBirth,Email,SpecID")] Doctor doctor)
+        public ActionResult Edit(DoctorEditVM ViewModel)
         {
+            Doctor doctor = new Doctor { Id = ViewModel.Id, Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Email = ViewModel.Email, SpecID = ViewModel.SpecID };
+            LoginUser user = UserManager.FindByEmail(ViewModel.LoginEmail);
+            user.UserName = ViewModel.Email;
+            user.Email = ViewModel.Email;
+            UserManager.Update(user);
             if (ModelState.IsValid)
             {
                 db.Entry(doctor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(doctor);
+            return View(ViewModel);
         }
 
         // GET: Doctors/Delete/5

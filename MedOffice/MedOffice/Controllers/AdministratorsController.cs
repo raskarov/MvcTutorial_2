@@ -34,20 +34,6 @@ namespace MedOffice.Controllers
             return View(db.Administrators.ToList());
         }
 
-        // GET: Administrators/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Administrator administrator = db.Administrators.Find(id);
-            if (administrator == null)
-            {
-                return HttpNotFound();
-            }
-            return View(administrator);
-        }
 
         // GET: Administrators/Create
         public ActionResult Create()
@@ -78,7 +64,7 @@ namespace MedOffice.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(administrator);
+            return View(ViewModel);
         }
 
         // GET: Administrators/Edit/5
@@ -93,7 +79,8 @@ namespace MedOffice.Controllers
             {
                 return HttpNotFound();
             }
-            return View(administrator);
+            AdminEditVM ViewModel = new AdminEditVM { ID = administrator.ID, Name = administrator.Name, Surname = administrator.Surname, Email = administrator.Email, LoginEmail = administrator.Email };
+            return View(ViewModel);
         }
 
         // POST: Administrators/Edit/5
@@ -101,15 +88,20 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Surname,Email")] Administrator administrator)
+        public ActionResult Edit(AdminEditVM ViewModel)
         {
+            Administrator admin = new Administrator { ID = ViewModel.ID, Name = ViewModel.Name, Surname = ViewModel.Surname, Email = ViewModel.Email };
+            LoginUser user = UserManager.FindByEmail(ViewModel.LoginEmail);
+            user.Email = ViewModel.Email;
+            user.UserName = ViewModel.Email;
+            UserManager.Update(user);
             if (ModelState.IsValid)
             {
-                db.Entry(administrator).State = EntityState.Modified;
+                db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(administrator);
+            return View(ViewModel);
         }
 
         // GET: Administrators/Delete/5

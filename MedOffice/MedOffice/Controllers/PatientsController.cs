@@ -65,20 +65,6 @@ namespace MedOffice.Controllers
             return View(patients.ToPagedList(pageNumber,pageSize));
         }
 
-        // GET: Patients/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Patient patient = db.Patients.Find(id);
-            if (patient == null)
-            {
-                return HttpNotFound();
-            }
-            return View(patient);
-        }
 
         // GET: Patients/Create
         public ActionResult Create()
@@ -102,7 +88,7 @@ namespace MedOffice.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(patient);
+            return View(ViewModel);
         }
 
         // GET: Patients/Edit/5
@@ -113,12 +99,12 @@ namespace MedOffice.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Patient patient = db.Patients.Find(id);
+            PatientEditVM ViewModel = new PatientEditVM { Id = patient.ID,Name = patient.Name, Surname = patient.Surname, DateOfBirth = patient.DateOfBirth, Comment = patient.Comment, DoctorId = patient.DoctorID };
             if (patient == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.DoctorID = new SelectList(db.Doctors, "Id", "FullName", patient.DoctorID);
-            return View(patient);
+            return View(ViewModel);
         }
 
         // POST: Patients/Edit/5
@@ -126,16 +112,16 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Surname,DateOfBirth,Comment,DoctorID")] Patient patient)
+        public ActionResult Edit(PatientEditVM ViewModel )
         {
+            Patient patient = new Patient { ID = ViewModel.Id,Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Comment = ViewModel.Comment, DoctorID = ViewModel.DoctorId };
             if (ModelState.IsValid)
             {
                 db.Entry(patient).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DoctorID = new SelectList(db.Doctors, "Id", "FullName", patient.DoctorID);
-            return View(patient);
+            return View(ViewModel);
         }
 
         // GET: Patients/Delete/5
