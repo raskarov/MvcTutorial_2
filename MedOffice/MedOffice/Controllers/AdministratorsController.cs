@@ -41,7 +41,7 @@ namespace MedOffice.Controllers
         public ActionResult Create()
         {
             AdminVM ViewModel = new AdminVM();
-            return View(ViewModel);
+            return PartialView("Create",ViewModel);
         }
 
         // POST: Administrators/Create

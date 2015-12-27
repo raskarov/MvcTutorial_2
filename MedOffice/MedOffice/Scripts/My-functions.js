@@ -1,16 +1,4 @@
-﻿($(function () {
-    $("#dialog-delete").dialog({
-        autoOpen: false,
-        height: 350,
-        width:500
-    });
-
-    $("#delete-opener").click(function () {
-        $("#dialog-delete").dialog("open");
-    });
-}));
-
-(function str_rand() {
+﻿function str_rand() {
     var result = '';
     var words = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
     var max_position = words.length - 1;
@@ -20,17 +8,41 @@
     }
 
     document.getElementById('password').value = result;
-});
+};
 
 ($(function () {
-    $("#dialog-edit").dialog({
+    $("#dialog-delete-admin").dialog({
         autoOpen: false,
         height: 350,
         width: 500
     });
 
-    $("#edit-opener").click(function () {
-        $("#dialog-edit").dialog("open");
+    $("#delete-admin-opener").click(function () {
+        $("#dialog-delete-admin").dialog("open");
+    });
+}));
+
+($(function () {
+    $("#dialog-edit-admin").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 500
+    });
+
+    $("#edit-admin-opener").click(function () {
+        $("#dialog-edit-admin").dialog("open");
+    });
+}));
+
+($(function () {
+    $("#dialog-create-admin").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 600
+    });
+
+    $("#create-admin-opener").click(function () {
+        $("#dialog-create-admin").dialog("open");
     });
 }));
 
