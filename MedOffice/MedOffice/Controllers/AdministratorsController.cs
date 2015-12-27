@@ -84,7 +84,7 @@ namespace MedOffice.Controllers
             AdminVM ViewModel = new AdminVM { };
             ViewModel.admin = administrator;
             ViewModel.LoginEmail = administrator.Email;
-            return View(ViewModel);
+            return PartialView("Edit",ViewModel);
         }
 
         // POST: Administrators/Edit/5
@@ -108,21 +108,22 @@ namespace MedOffice.Controllers
             return View(ViewModel);
         }
 
-        // GET: Administrators/Delete/5
+        //GET: Administrators/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Administrator administrator = db.Administrators.Find(id);
-            if (administrator == null)
-            {
-                return HttpNotFound();
-            }
-            AdminVM Administrator = new AdminVM { };
-            Administrator.admin = administrator;
-            return PartialView(Administrator);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Administrator administrator = db.Administrators.Find(id);
+                if (administrator == null)
+                {
+                    return HttpNotFound();
+                }
+                AdminVM Administrator = new AdminVM { };
+                Administrator.admin = administrator;
+                return PartialView("Delete",Administrator);
+            
         }
 
         // POST: Administrators/Delete/5

@@ -5,40 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
-    <script>
-        function str_rand() {
-            var result = '';
-            var words = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
-            var max_position = words.length - 1;
-            for (i = 0; i < 8; ++i) {
-                position = Math.floor(Math.random() * max_position);
-                result = result + words.substring(position, position + 1);
-            }
-
-            document.getElementById('password').value = result;
-        }
-    </script>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/modernizr")
-    <script>
-        $(function () {
-            $("#dialog-modal").dialog({
-                autoOpen: false,
-                height: 350,
-                width:500
-            });
-
-            $("#modal-opener").click(function () {
-                $("#dialog-modal").dialog("open");
-            });
-        });
-
-        
-    </script>
+    @Scripts.Render("~/Scripts/My-functions.js")
     
 </head>
 <body>

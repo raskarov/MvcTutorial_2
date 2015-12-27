@@ -35,14 +35,16 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID }, new { id = "modal-opener" })
+            @Ajax.ActionLink("Edit", "Edit", new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-edit", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @id = "edit-opener" }) |
+            @Ajax.ActionLink("Delete","Delete",new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-delete", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @id = "delete-opener" } )
         </td>
     </tr>
 }
 
 </table>
 
-@*<div id="dialog-modal" title="Delete">
-    @Html.Partial("DeletePV")
-</div>*@
+
+<div id="dialog-delete" title="Delete">
+</div>
+
+<div id="dialog-edit" title="Edit"></div>
