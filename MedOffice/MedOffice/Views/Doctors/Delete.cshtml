@@ -1,4 +1,4 @@
-﻿@model MedOffice.Models.Doctor
+﻿@model MedOffice.ViewModels.DoctorVM
 
 @{
     ViewBag.Title = "Delete";
@@ -12,43 +12,43 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.doctor.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.doctor.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Surname)
+            @Html.DisplayNameFor(model => model.doctor.Surname)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Surname)
+            @Html.DisplayFor(model => model.doctor.Surname)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            @Html.DisplayNameFor(model => model.doctor.DateOfBirth)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
+            @Html.DisplayFor(model => model.doctor.DateOfBirth)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.doctor.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.doctor.Email)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Spec.Name)
+            @Html.DisplayNameFor(model => model.doctor.Spec.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Spec.Name)
+            @Html.DisplayFor(model => model.doctor.Spec.Name)
         </dd>
 
     </dl>

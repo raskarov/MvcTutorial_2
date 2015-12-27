@@ -31,14 +31,16 @@ namespace MedOffice.Controllers
         [Authorize(Roles ="admin")]
         public ActionResult Index()
         {
-            return View(db.Administrators.ToList());
+            AdminVM Administrators = new AdminVM();
+            Administrators.list = db.Administrators.ToList();
+            return View(Administrators);
         }
 
 
         // GET: Administrators/Create
         public ActionResult Create()
         {
-            AdminCreateVM ViewModel = new AdminCreateVM();
+            AdminVM ViewModel = new AdminVM();
             return View(ViewModel);
         }
 
@@ -47,10 +49,10 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( AdminCreateVM ViewModel, string password)
+        public ActionResult Create( AdminVM ViewModel, string password)
         {
 
-            Administrator administrator = new Administrator { Name = ViewModel.Name, Surname = ViewModel.Surname, Email = ViewModel.Email };
+            Administrator administrator = ViewModel.admin;
             LoginUser user = new LoginUser { UserName = administrator.Email, Email = administrator.Email };
             var result = UserManager.Create(user, password);
             if(result.Succeeded)
@@ -79,7 +81,9 @@ namespace MedOffice.Controllers
             {
                 return HttpNotFound();
             }
-            AdminEditVM ViewModel = new AdminEditVM { ID = administrator.ID, Name = administrator.Name, Surname = administrator.Surname, Email = administrator.Email, LoginEmail = administrator.Email };
+            AdminVM ViewModel = new AdminVM { };
+            ViewModel.admin = administrator;
+            ViewModel.LoginEmail = administrator.Email;
             return View(ViewModel);
         }
 
@@ -88,12 +92,12 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AdminEditVM ViewModel)
+        public ActionResult Edit(AdminVM ViewModel)
         {
-            Administrator admin = new Administrator { ID = ViewModel.ID, Name = ViewModel.Name, Surname = ViewModel.Surname, Email = ViewModel.Email };
+            Administrator admin = ViewModel.admin; 
             LoginUser user = UserManager.FindByEmail(ViewModel.LoginEmail);
-            user.Email = ViewModel.Email;
-            user.UserName = ViewModel.Email;
+            user.Email = ViewModel.admin.Email;
+            user.UserName = ViewModel.admin.Email;
             UserManager.Update(user);
             if (ModelState.IsValid)
             {
@@ -116,7 +120,9 @@ namespace MedOffice.Controllers
             {
                 return HttpNotFound();
             }
-            return View(administrator);
+            AdminVM Administrator = new AdminVM { };
+            Administrator.admin = administrator;
+            return PartialView(Administrator);
         }
 
         // POST: Administrators/Delete/5

@@ -69,7 +69,7 @@ namespace MedOffice.Controllers
         // GET: Patients/Create
         public ActionResult Create()
         {
-            CreatePatientVM ViewModel = new CreatePatientVM();
+            PatientVM ViewModel = new PatientVM();
             return View(ViewModel);
         }
 
@@ -78,9 +78,9 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( CreatePatientVM ViewModel)
+        public ActionResult Create(PatientVM ViewModel)
         {
-            Patient patient = new Patient { Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Comment = ViewModel.Comment, DoctorID = ViewModel.DoctorId };
+            Patient patient = ViewModel.patient;
             if (ModelState.IsValid)
             {
                 db.Patients.Add(patient);
@@ -98,12 +98,12 @@ namespace MedOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Patient patient = db.Patients.Find(id);
-            PatientEditVM ViewModel = new PatientEditVM { Id = patient.ID,Name = patient.Name, Surname = patient.Surname, DateOfBirth = patient.DateOfBirth, Comment = patient.Comment, DoctorId = patient.DoctorID };
-            if (patient == null)
+            Patient Patient = db.Patients.Find(id);
+            if (Patient == null)
             {
                 return HttpNotFound();
             }
+            PatientVM ViewModel = new PatientVM { patient = Patient };
             return View(ViewModel);
         }
 
@@ -112,9 +112,9 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PatientEditVM ViewModel )
+        public ActionResult Edit(PatientVM ViewModel )
         {
-            Patient patient = new Patient { ID = ViewModel.Id,Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Comment = ViewModel.Comment, DoctorID = ViewModel.DoctorId };
+            Patient patient = ViewModel.patient;
             if (ModelState.IsValid)
             {
                 db.Entry(patient).State = EntityState.Modified;
@@ -131,12 +131,13 @@ namespace MedOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Patient patient = db.Patients.Find(id);
-            if (patient == null)
+            Patient Patient = db.Patients.Find(id);
+            if (Patient == null)
             {
                 return HttpNotFound();
             }
-            return View(patient);
+            PatientVM ViewModel = new PatientVM { patient = Patient };
+            return View(ViewModel);
         }
 
         // POST: Patients/Delete/5

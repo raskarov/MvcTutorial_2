@@ -78,7 +78,7 @@ namespace MedOffice.Controllers
         // GET: Doctors/Create
         public ActionResult Create()
         {
-            CreateDoctorVM CreateDoctor = new CreateDoctorVM();
+            DoctorVM CreateDoctor = new DoctorVM();
             return View(CreateDoctor);
         }
 
@@ -87,10 +87,10 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateDoctorVM ViewModel, string password)
+        public ActionResult Create(DoctorVM ViewModel, string password)
         {
 
-            Doctor doctor = new Doctor { Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Email = ViewModel.Email, SpecID = ViewModel.SpecId };
+            Doctor doctor = ViewModel.doctor;
             LoginUser user = new LoginUser { UserName = doctor.Email, Email = doctor.Email };
             var result = UserManager.Create(user, password);
             if(result.Succeeded)
@@ -115,12 +115,14 @@ namespace MedOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Doctor Doctor = db.Doctors.Find(id);
+            if (Doctor == null)
             {
                 return HttpNotFound();
             }
-            DoctorEditVM ViewModel = new DoctorEditVM { Id = doctor.Id, Name = doctor.Name, Surname = doctor.Surname, DateOfBirth = doctor.DateOfBirth, Email = doctor.Email, LoginEmail = doctor.Email, SpecID = doctor.SpecID };
+            DoctorVM ViewModel = new DoctorVM();
+            ViewModel.doctor = Doctor;
+            ViewModel.LoginEmail = Doctor.Email;
             return View(ViewModel);
         }
 
@@ -129,12 +131,12 @@ namespace MedOffice.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(DoctorEditVM ViewModel)
+        public ActionResult Edit(DoctorVM ViewModel)
         {
-            Doctor doctor = new Doctor { Id = ViewModel.Id, Name = ViewModel.Name, Surname = ViewModel.Surname, DateOfBirth = ViewModel.DateOfBirth, Email = ViewModel.Email, SpecID = ViewModel.SpecID };
+            Doctor doctor = ViewModel.doctor;
             LoginUser user = UserManager.FindByEmail(ViewModel.LoginEmail);
-            user.UserName = ViewModel.Email;
-            user.Email = ViewModel.Email;
+            user.UserName = ViewModel.doctor.Email;
+            user.Email = ViewModel.doctor.Email;
             UserManager.Update(user);
             if (ModelState.IsValid)
             {
@@ -158,7 +160,9 @@ namespace MedOffice.Controllers
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            DoctorVM ViewModel = new DoctorVM();
+            ViewModel.doctor = doctor;
+            return View(ViewModel);
         }
 
         public ActionResult Patients(int? id,int? page,string sortOrder, string searchString, string currentFilter)
