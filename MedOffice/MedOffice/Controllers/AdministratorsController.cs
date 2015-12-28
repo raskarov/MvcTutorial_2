@@ -111,9 +111,16 @@ namespace MedOffice.Controllers
         //GET: Administrators/Delete/5
         public ActionResult Delete(int? id)
         {
+                LoginUser user = UserManager.FindByName(User.Identity.Name.ToString());
+                string Email = user.Email;
+                Administrator admin = db.Administrators.Where(a => Email == a.Email).FirstOrDefault();
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                if (admin.ID == id)
+                {
+                    return PartialView("Fail");
                 }
                 Administrator administrator = db.Administrators.Find(id);
                 if (administrator == null)

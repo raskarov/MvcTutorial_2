@@ -29,8 +29,10 @@ namespace MedOffice.Controllers
 
         // GET: Doctors
         [Authorize(Roles ="admin")]
+        
         public ActionResult Index(int? page, string sortOrder, string searchString, string currentFilter)
         {
+            
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.SpecSortParm = sortOrder == "Spec" ? "spec_desc" : "Spec";

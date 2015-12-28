@@ -12,7 +12,7 @@ namespace MedOffice.Controllers
     {
 
         public ActionResult Index()
-        { 
+        {
             return View();
         }
 
