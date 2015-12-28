@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<MedOffice.Models.Doctor>
+﻿@model MedOffice.ViewModels.DoctorVM
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/ccs" />
 @{
@@ -8,7 +8,7 @@
 <h2>Doctors</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Ajax.ActionLink("Create New", "Create",null, new AjaxOptions { UpdateTargetId = "dialog-create-doctor", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "create-doctor-opener" })
 </p>
 @using (Html.BeginForm("Index", "Doctors",FormMethod.Get))
 {
@@ -40,7 +40,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Doctors) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -58,11 +58,11 @@
             @Html.DisplayFor(modelItem => item.Spec.Name)
         </td>
         <td>
-            @Html.ActionLink("Show","Patients", new { id = item.Id })
+            @Ajax.ActionLink("Show","Patients", new { id = item.Id }, new AjaxOptions { UpdateTargetId = "dialog-show-patients", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "show-patients-opener" })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Ajax.ActionLink("Edit", "Edit", new { id = item.Id }, new AjaxOptions { UpdateTargetId = "dialog-edit-doctor", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "edit-doctor-opener" }) |
+            @Ajax.ActionLink("Delete", "Delete", new { id = item.Id }, new AjaxOptions { UpdateTargetId = "dialog-delete-doctor", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "delete-doctor-opener" })
         </td>
     </tr>
 }
@@ -70,6 +70,16 @@
 </table>
 
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0: Model.PageNumber) of @Model.PageCount
+Page @(Model.Doctors.PageCount < Model.Doctors.PageNumber ? 0: Model.Doctors.PageNumber) of @Model.Doctors.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model.Doctors, page => Url.Action("Index",new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+<div id="dialog-delete-doctor" title="Delete">
+</div>
+
+<div id="dialog-edit-doctor" title="Edit"></div>
+
+<div id="dialog-create-doctor" title="Create"></div> 
+
+<div id="dialog-show-patients" title="Patients"></div>

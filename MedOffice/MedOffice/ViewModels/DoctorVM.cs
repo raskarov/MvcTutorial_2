@@ -12,7 +12,9 @@ namespace MedOffice.ViewModels
     {
         public Doctor doctor { get; set; }
         public string LoginEmail { get; set; }
+        public PagedList.IPagedList<MedOffice.Models.Doctor> Doctors;
         public List<SelectListItem> list = new List<SelectListItem>();
+        public PagedList.IPagedList<MedOffice.Models.Patient> Patients;
 
         public DoctorVM()
         {

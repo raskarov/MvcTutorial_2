@@ -7,7 +7,7 @@
 <h2>Administrators</h2>
 
 <p>
-    @Ajax.ActionLink("Create New", "Create",null, new AjaxOptions { UpdateTargetId = "dialog-create-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @id = "create-admin-opener" }) 
+    @Ajax.ActionLink("Create New", "Create",null, new AjaxOptions { UpdateTargetId = "dialog-create-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "create-admin-opener" }) 
 </p>
 <table class="table">
     <tr>
@@ -35,8 +35,8 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Ajax.ActionLink("Edit", "Edit", new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-edit-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @id = "edit-admin-opener" }) |
-            @Ajax.ActionLink("Delete","Delete",new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-delete-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @id = "delete-admin-opener" } )
+            @Ajax.ActionLink("Edit", "Edit", new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-edit-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "edit-admin-opener" }) |
+            @Ajax.ActionLink("Delete","Delete",new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-delete-admin", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "delete-admin-opener" } )
         </td>
     </tr>
 }

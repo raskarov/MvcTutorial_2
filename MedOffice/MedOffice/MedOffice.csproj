@@ -337,7 +337,6 @@
     <Content Include="Views\Administrators\Create.cshtml" />
     <Content Include="Views\Administrators\Edit.cshtml" />
     <Content Include="Views\Administrators\Index.cshtml" />
-    <Content Include="Views\Doctors\Patients.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Administrators\Delete.cshtml" />
   </ItemGroup>

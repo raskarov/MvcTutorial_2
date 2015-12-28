@@ -1,14 +1,77 @@
-﻿@model PagedList.IPagedList<MedOffice.Models.Patient>
+﻿@model MedOffice.ViewModels.PatientVM
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/ccs" />
-
+<h2>Patients</h2>
 @{
-    ViewBag.Title = "Patients";
+    ViewBag.Title = "Patients";   
 }
 
+<p>
+    @Ajax.ActionLink("Create New", "Create", null, new AjaxOptions { UpdateTargetId = "dialog-create-patient", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "create-patient-opener" })
+</p>
 
+@using (Html.BeginForm("Index", "Patients", FormMethod.Get))
+{
+    <p>
+        Find by Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 
-@Html.Partial("PatPartV")
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Date of birth
+        </th>
+        <th>
+            @Html.ActionLink("Doctor", "Index", new { sortOrder = ViewBag.DoctSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Comment
+        </th>
+        <th></th>
+    </tr>
 
+    @foreach (var item in Model.Patients)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Ajax.ActionLink("Edit", "Edit", new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-edit-patient", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "edit-patient-opener" })  |
+                @Ajax.ActionLink("Delete", "Delete", new { id = item.ID }, new AjaxOptions { UpdateTargetId = "dialog-delete-patient", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, htmlAttributes: new { @class = "delete-patient-opener" }) 
+            </td>
+        </tr>
+    }
+</table>
 
+<br />
+Page @(Model.Patients.PageCount < Model.Patients.PageNumber ? 0 : Model.Patients.PageNumber) of @Model.Patients.PageCount
 
+@Html.PagedListPager(Model.Patients, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<div></div><div id="dialog-delete-patient" title="Delete">
+</div>
+
+<div id="dialog-edit-patient" title="Edit"></div>
+
+<div id="dialog-create-patient" title="Create"></div> 

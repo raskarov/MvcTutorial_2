@@ -68,8 +68,9 @@ namespace MedOffice.Controllers
             }
             int PageSize = 5;
             int PageNumber = (page ?? 1);
-            
-            return View(Doctors.ToPagedList(PageNumber,PageSize));
+            DoctorVM ViewModel = new DoctorVM();
+            ViewModel.Doctors = Doctors.ToPagedList(PageNumber,PageSize);
+            return View(ViewModel);
         }
 
         // GET: Doctors/Details/5
@@ -78,8 +79,8 @@ namespace MedOffice.Controllers
         // GET: Doctors/Create
         public ActionResult Create()
         {
-            DoctorVM CreateDoctor = new DoctorVM();
-            return View(CreateDoctor);
+            DoctorVM ViewModel = new DoctorVM();
+            return PartialView("Create",ViewModel);
         }
 
         // POST: Doctors/Create
@@ -123,7 +124,7 @@ namespace MedOffice.Controllers
             DoctorVM ViewModel = new DoctorVM();
             ViewModel.doctor = Doctor;
             ViewModel.LoginEmail = Doctor.Email;
-            return View(ViewModel);
+            return PartialView("Edit",ViewModel);
         }
 
         // POST: Doctors/Edit/5
@@ -162,7 +163,7 @@ namespace MedOffice.Controllers
             }
             DoctorVM ViewModel = new DoctorVM();
             ViewModel.doctor = doctor;
-            return View(ViewModel);
+            return PartialView("Delete",ViewModel);
         }
 
         public ActionResult Patients(int? id,int? page,string sortOrder, string searchString, string currentFilter)
@@ -209,9 +210,9 @@ namespace MedOffice.Controllers
             }
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-
-
-            return View(Pat.ToPagedList(pageNumber,pageSize));
+            DoctorVM ViewModel = new DoctorVM();
+            ViewModel.Patients = Pat.ToPagedList(pageNumber, pageSize);
+            return PartialView("~/Views/Patients/PatPartV.cshtml", ViewModel);
 
         }
 

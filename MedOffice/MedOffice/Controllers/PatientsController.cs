@@ -37,7 +37,6 @@ namespace MedOffice.Controllers
             ViewBag.CurrentFilter = searchString;
 
             var patients = db.Patients.Include(p => p.Doctor);
-
             if (!String.IsNullOrEmpty(searchString))
             {
                 patients = patients.Where(x => x.Name.Contains(searchString) || x.Surname.Contains(searchString));
@@ -58,11 +57,11 @@ namespace MedOffice.Controllers
                     patients = patients.OrderBy(x => x.Name);
                     break;
             }
-            
-
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(patients.ToPagedList(pageNumber,pageSize));
+            PatientVM ViewModel = new PatientVM();
+            ViewModel.Patients = patients.ToPagedList(pageNumber,pageSize);
+            return View(ViewModel);
         }
 
 
@@ -70,7 +69,7 @@ namespace MedOffice.Controllers
         public ActionResult Create()
         {
             PatientVM ViewModel = new PatientVM();
-            return View(ViewModel);
+            return PartialView("Create",ViewModel);
         }
 
         // POST: Patients/Create
@@ -104,7 +103,7 @@ namespace MedOffice.Controllers
                 return HttpNotFound();
             }
             PatientVM ViewModel = new PatientVM { patient = Patient };
-            return View(ViewModel);
+            return PartialView("Edit",ViewModel);
         }
 
         // POST: Patients/Edit/5
@@ -121,7 +120,7 @@ namespace MedOffice.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(ViewModel);
+            return PartialView(ViewModel);
         }
 
         // GET: Patients/Delete/5
@@ -137,7 +136,7 @@ namespace MedOffice.Controllers
                 return HttpNotFound();
             }
             PatientVM ViewModel = new PatientVM { patient = Patient };
-            return View(ViewModel);
+            return PartialView("Delete",ViewModel);
         }
 
         // POST: Patients/Delete/5

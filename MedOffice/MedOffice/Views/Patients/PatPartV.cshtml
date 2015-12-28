@@ -1,24 +1,14 @@
-﻿@model PagedList.IPagedList<MedOffice.Models.Patient>
+﻿@model MedOffice.ViewModels.DoctorVM
 @using PagedList.Mvc;
 
 <h2>Patients</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-@using (Html.BeginForm("Index", "Patients", FormMethod.Get))
-{
-    <p>
-        Find by Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
 
 <table class="table">
     <tr>       
         <th>
-            @Html.ActionLink("Name","Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            Name
         </th>
         <th>
             Surname
@@ -27,7 +17,7 @@
             Date of birth
         </th>
         <th>
-            @Html.ActionLink("Doctor","Index", new { sortOrder = ViewBag.DoctSortParm, currentFilter = ViewBag.CurrentFilter})
+            Doctor
         </th>
         <th>
             Comment
@@ -35,7 +25,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Patients)
     {
         <tr>           
             <td>
@@ -53,16 +43,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
         </tr>
     }
 </table>
 
-
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
