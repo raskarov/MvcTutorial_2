@@ -10,12 +10,22 @@ using MedOffice.DAL;
 using MedOffice.Models;
 using PagedList;
 using MedOffice.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MedOffice.Controllers
 {
     public class PatientsController : Controller
     {
         private OfficeContext db = new OfficeContext();
+
+        private LoginUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<LoginUserManager>();
+            }
+        }
 
         [Authorize]
         // GET: Patients
@@ -61,6 +71,56 @@ namespace MedOffice.Controllers
             int pageNumber = (page ?? 1);
             PatientVM ViewModel = new PatientVM();
             ViewModel.Patients = patients.ToPagedList(pageNumber,pageSize);
+            return View(ViewModel);
+        }
+
+        public ActionResult Patients(int? page, string sortOrder, string searchString, string currentFilter)
+        {
+
+            LoginUser user = UserManager.FindByName(User.Identity.Name.ToString());
+            string Email = user.Email;
+            Doctor doctor = db.Doctors.Where(d => d.Email == Email).FirstOrDefault();
+            int id = doctor.Id;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DoctSortParm = sortOrder == "Doct" ? "doct_desc" : "Doct";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var patients = db.Patients.Where(p=>p.DoctorID ==  id).Include(p => p.Doctor);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(x => x.Name.Contains(searchString) || x.Surname.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(x => x.Name);
+                    break;
+                case "Doct":
+                    patients = patients.OrderBy(x => x.Doctor.Surname);
+                    break;
+                case "doct_desc":
+                    patients = patients.OrderByDescending(x => x.Doctor.Surname);
+                    break;
+                default:
+                    patients = patients.OrderBy(x => x.Name);
+                    break;
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            PatientVM ViewModel = new PatientVM();
+            ViewModel.Patients = patients.ToPagedList(pageNumber, pageSize);
             return View(ViewModel);
         }
 

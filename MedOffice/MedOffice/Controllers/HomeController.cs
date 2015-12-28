@@ -11,7 +11,12 @@ namespace MedOffice.Controllers
     public class HomeController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult AdminIndex()
+        {
+            return View();
+        }
+
+        public ActionResult DoctorIndex()
         {
             return View();
         }

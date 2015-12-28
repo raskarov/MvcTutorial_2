@@ -38,15 +38,14 @@ namespace MedOffice.Controllers
             }
         }
 
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.returnurl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -64,12 +63,17 @@ namespace MedOffice.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (String.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction("Index", "Home");
-                    return Redirect(returnUrl);
+
+                    if (user.Roles.First().RoleId.ToString() == "1")
+                    {
+                        return RedirectToAction("AdminIndex", "Home");
+                    }
+                    if (user.Roles.First().RoleId.ToString() == "2")
+                    {
+                        return RedirectToAction("DoctorIndex", "Home");
+                    }
                 }
             }
-            ViewBag.returnUrl = returnUrl;
             return View(model);
         }
 

@@ -168,6 +168,10 @@ namespace MedOffice.Controllers
             return PartialView("Delete",ViewModel);
         }
 
+
+
+
+
         public ActionResult Patients(int? id,int? page,string sortOrder, string searchString, string currentFilter)
         {
             if (id == null)
@@ -218,6 +222,9 @@ namespace MedOffice.Controllers
 
         }
 
+        
+        
+        
         // POST: Doctors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

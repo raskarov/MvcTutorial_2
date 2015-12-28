@@ -1,14 +1,15 @@
 ﻿@model MedOffice.ViewModels.DoctorVM
 @using PagedList.Mvc;
 
-<h2>Patients</h2>
-
+<p>
+   
+</p>
 
 
 <table class="table">
-    <tr>       
+    <tr>
         <th>
-            Name
+           Name
         </th>
         <th>
             Surname
@@ -27,7 +28,7 @@
 
     @foreach (var item in Model.Patients)
     {
-        <tr>           
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -48,6 +49,8 @@
 </table>
 
 <br />
+Page @(Model.Patients.PageCount < Model.Patients.PageNumber ? 0 : Model.Patients.PageNumber) of @Model.Patients.PageCount
 
+@Html.PagedListPager(Model.Patients, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 

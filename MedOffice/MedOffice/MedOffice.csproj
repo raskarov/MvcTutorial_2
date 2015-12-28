@@ -324,7 +324,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Doctors\Create.cshtml" />
     <Content Include="Views\Doctors\Delete.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
@@ -340,6 +339,11 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Administrators\Delete.cshtml" />
     <Content Include="Views\Administrators\Fail.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Home\DoctorIndex.cshtml" />
+    <Content Include="Views\Home\AdminIndex.cshtml" />
+    <Content Include="Views\Doctors\Patients.cshtml" />
+    <Content Include="Views\Patients\Patients.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
